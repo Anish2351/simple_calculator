@@ -5,6 +5,7 @@ void main() => runApp(Calculator());
 class Calculator extends StatelessWidget {
   Widget build(BuildContext build) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: '',
       home: SimpleCalculator(),
     );
@@ -69,14 +70,17 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 60.0,
+                  child: Container(
+                    margin: EdgeInsets.only(right: 15),
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 60.0,
+                      ),
+                      textAlign: TextAlign.right,
+                      maxLines: 1,
                     ),
-                    textAlign: TextAlign.right,
-                    maxLines: 1,
                   ),
                 )
               ],
