@@ -28,18 +28,22 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
 
   Widget btn(btnText, Color color) {
     return Container(
-        padding: EdgeInsets.only(bottom: 10.0),
-        child: RaisedButton(
-            child: Text(
-              btnText,
-              style: TextStyle(fontSize: 30),
-            ),
-            onPressed: () {
-              calculation(btnText);
-            },
-            color: color,
-            padding: EdgeInsets.all(22.0),
-            shape: CircleBorder()));
+      padding: EdgeInsets.only(bottom: 10.0),
+      child: RaisedButton(
+        child: Text(
+          btnText,
+          style: TextStyle(
+            fontSize: 30,
+          ),
+        ),
+        onPressed: () {
+          calculation(btnText);
+        },
+        color: color,
+        padding: EdgeInsets.all(22.0),
+        shape: CircleBorder(),
+      ),
+    );
   } // end of button
 
   Widget btnZero(btnText, Color color) {
@@ -60,7 +64,6 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
 
   Widget build(BuildContext buildCx) {
     return Scaffold(
-      appBar: null,
       backgroundColor: Colors.black,
       body: Container(
         margin: EdgeInsets.only(bottom: 20.0),
@@ -71,7 +74,7 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
               children: <Widget>[
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.only(right: 15),
+                    padding: EdgeInsets.only(right: 15),
                     child: Text(
                       text,
                       style: TextStyle(
@@ -89,9 +92,9 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 btn('C', const Color(0xffa5a5a5)), // AARRGGBB
+                btn('⌫', const Color(0xffa5a5a5)),
                 btn('+/-', const Color(0xffa5a5a5)),
-                btn('%', const Color(0xffa5a5a5)),
-                btn('/', Colors.orange),
+                btn('÷', Color(0xFFff9d0b)),
               ],
             ),
             Row(
@@ -100,7 +103,7 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
                 btn('7', const Color(0xff333333)),
                 btn('8', const Color(0xff333333)),
                 btn('9', const Color(0xff333333)),
-                btn('x', Colors.orange),
+                btn('x', Color(0xFFff9d0b)),
               ],
             ),
             Row(
@@ -109,7 +112,7 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
                 btn('4', const Color(0xff333333)),
                 btn('5', const Color(0xff333333)),
                 btn('6', const Color(0xff333333)),
-                btn('-', Colors.orange),
+                btn('-', Color(0xFFff9d0b)),
               ],
             ),
             Row(
@@ -141,7 +144,7 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
       numOne = 0;
       numTwo = 0;
       result = '';
-      finalResult = '';
+      finalResult = '0';
       opr = '';
       preOpr = '';
     } else if (opr == '=' && btnText == '=') {
@@ -151,13 +154,13 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
         finalResult = sub();
       } else if (preOpr == 'x') {
         finalResult = mul();
-      } else if (preOpr == '/') {
+      } else if (preOpr == '÷') {
         finalResult = div();
       }
     } else if (btnText == '+' ||
         btnText == '-' ||
         btnText == 'x' ||
-        btnText == '/' ||
+        btnText == '÷' ||
         btnText == '=') {
       if (numOne == 0) {
         numOne = double.parse(result);
@@ -171,14 +174,14 @@ class SimpleCalculatorState extends State<SimpleCalculator> {
         finalResult = sub();
       } else if (opr == 'x') {
         finalResult = mul();
-      } else if (opr == '/') {
+      } else if (opr == '÷') {
         finalResult = div();
       }
       preOpr = opr;
       opr = btnText;
       result = '';
-    } else if (btnText == '%') {
-      result = numOne / 100;
+    } else if (btnText == '⌫') {
+      result = result.toString().substring(0, result.toString().length - 1);
       finalResult = doesContainDecimal(result);
     } else if (btnText == '.') {
       if (!result.toString().contains('.')) {
